@@ -1,0 +1,204 @@
+Инструкция по деплою fullstack-приложения на VPS
+
+//1 - Подключаемся к серверу по ssh и добавляем нового root пользователя
+adduser ivan
+
+открываем файл:
+visudo
+
+Добавляем новую строку "ivan ALL=(ALL:ALL)ALL" после "root ALL=(ALL:ALL) ALL"
+
+переходим на созданного пользователя "su - ivan"
+тестируем успешный переход командой "sudo apt-get update"
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//2 - Установка nvm, node, npm
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+
+nvm -v
+
+(установите ту же версию, что и на вашем ПК)
+nvm install node 21.6
+
+тестируем командой "node -v" или "npm -v"
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//3 - Пуш в отдельные git-репозитории client и server части приложения
+
+git add .
+git commit -m 'Init'
+git add origin
+git push origin main
+
+
+Создаем ключ для git на сервере
+ssh-keygen -o -t rsa -C “ssh@github.com”
+"ll" - для теста
+"cat id_rsa.pub" // копируем
+
+вставляем в github аккаунте -> Settings/SSH and GPG keys -> New SSH key
+
+На VPS:
+Создаем папку проекта:
+mkdir "project-folder"
+
+sudo apt-get install git-all
+
+измените свой URL-адрес git
+git clone git@github.com:username/front.git
+git clone git@github.com:username/back.git
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//4 - База данных
+
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+Открываем в терминал PostgreSQL под дефолтным пользователем postgres
+sudo -u postgres psql
+
+Пожалуйста, измените имя базы данных и логин пользователя
+CREATE ROLE ivan WITH LOGIN PASSWORD '123456' CREATEDB;
+CREATE DATABASE your_app_db OWNER ivan;
+GRANT ALL PRIVILEGES ON DATABASE your_app_db TO ivan;
+
+Базовые команды:
+список пользователей
+\du
+
+список баз данных
+\l
+
+выход
+\q
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//5 - Установка переменных окружения и зависимостей
+
+Создаем .env в server и client директориях
+
+команда nano .env
+
+Для server:
+PORT=5000
+DB_NAME=your_app_db
+DB_USER=postgres
+DB_PASSWORD=Ваш_пароль
+DB_HOST=localhost
+DB_PORT=5432
+SECRET_KEY=random_secret_key
+NODE_ENV=production
+
+Для client:
+REACT_APP_API_URL=http://адрес_сервера:5000/
+
+выйти и сохранить
+^x
+
+// (не обязательно), если вам нужны pnpm или yarn
+npm install -g pnpm
+npm install -g yarn
+
+yarn или pnpm install или npm install
+
+Загружаем dump вашей базы данных с вашего ПК на сервер
+scp C:/Users/user/files/fullstack_app_backup_01_08_2025 ivan@адрес_вашего сервера:/home/ivan
+
+Копируем файл в домашнюю директорию postgres:
+sudo cp /home/ivan/fullstack_app_backup_01_08_2025 /var/lib/postgresql/
+sudo chown postgres:postgres /var/lib/postgresql/fullstack_app_backup_01_08_2025
+
+Удаляем все существующие таблицы из созданной БД перед загрузкой дампа:
+sudo -u postgres psql -d your_app_db -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
+
+После этого загружаем наш дамп в пустую БД:
+sudo -u postgres pg_restore -d your_app_db -Fc /var/lib/postgresql/apart_delivery_backup_01_08_2025
+
+Проверяем командой sudo -u postgres psql -d your_app_db -c "\dt"
+
+// prisma for back
+npx prisma db push (only first lunch after use "npx prisma migrate deploy")
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//6 - PM 2 (process manager)
+
+npm run build
+
+npm install pm2 -g
+
+// for npm
+pm2 start npm --name client -- start
+pm2 start npm --name server -- start
+
+// for yarn
+pm2 start yarn --name client -- start
+pm2 start yarn --name server -- start
+
+// for pnpm
+pm2 start pnpm --name client -- start
+pm2 start pnpm --name server -- start
+
+
+//autolunch
+pm2 startup ubuntu
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//7 - Nginx (web-server)
+
+sudo apt-get install nginx
+
+sudo nano /etc/nginx/sites-available/default
+
+server {
+  location /api {
+        proxy_pass http://localhost:4200;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+location /{
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+		}
+
+//for test
+sudo nginx -t
+
+sudo service nginx restart
+
+//if u have statics folders
+location /public {
+    include /etc/nginx/mime.types;
+    root /home/....;
+}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//8 - Bonus SSL
+
+sudo apt install certbot python3-certbot-nginx
+sudo systemctl reload nginx
+
+//change domain
+sudo certbot --nginx -d test.com
+
+sudo systemctl status certbot.timer
+
+//check for errors
+sudo certbot renew --dry-run
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+If u update files, you should on server:
+
+
+git pull && pnpm run build && pm2 reload all
+	
