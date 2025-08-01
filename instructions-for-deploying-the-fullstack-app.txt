@@ -117,9 +117,6 @@ sudo -u postgres pg_restore -d your_app_db -Fc /var/lib/postgresql/apart_deliver
 
 Проверяем командой sudo -u postgres psql -d your_app_db -c "\dt"
 
-// prisma for back
-npx prisma db push (only first lunch after use "npx prisma migrate deploy")
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //6 - PM 2 (process manager)
 
