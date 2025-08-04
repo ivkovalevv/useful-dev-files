@@ -138,6 +138,15 @@ pm2 start yarn --name server -- run dev (смотрите скрипт для з
 pm2 start pnpm --name client -- start (смотрите скрипт для запуска в package.json)
 pm2 start pnpm --name server -- run dev (смотрите скрипт для запуска в package.json)
 
+!!! Если есть проблема с аутентификацией при подключении к БД при запуске сервера:
+Проверяем логин и пароль в .env
+
+Выдаём права на схему public (от имени postgres):
+sudo -u postgres psql -c "ALTER SCHEMA public OWNER TO ваш_пользователь; GRANT ALL ON SCHEMA public TO ваш_пользователь;"
+
+Перезапускаем приложение:
+pm2 restart all
+
 
 // автоматизируем запуск
 pm2 startup ubuntu
@@ -147,6 +156,9 @@ pm2 save
 
 // команда ля проверки
 pm2 log
+
+// интерактивный мониторинг
+pm2 monit 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //7 - Nginx (web-server)
