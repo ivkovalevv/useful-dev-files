@@ -118,27 +118,35 @@ sudo -u postgres pg_restore -d your_app_db -Fc /var/lib/postgresql/apart_deliver
 Проверяем командой sudo -u postgres psql -d your_app_db -c "\dt"
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//6 - PM 2 (process manager)
+//6 - PM 2 (процессный менеджер)
 
+Собираем client часть приложения:
 npm run build
 
+Устанавливаем процессный менеджер pm2:
 npm install pm2 -g
 
-// for npm
-pm2 start npm --name client -- start
-pm2 start npm --name server -- start
+// для npm
+pm2 start npm --name client -- start (смотрите скрипт для запуска в package.json)
+pm2 start npm --name server -- run dev (смотрите скрипт для запуска в package.json)
 
-// for yarn
-pm2 start yarn --name client -- start
-pm2 start yarn --name server -- start
+// для yarn
+pm2 start yarn --name client -- start (смотрите скрипт для запуска в package.json)
+pm2 start yarn --name server -- run dev (смотрите скрипт для запуска в package.json)
 
-// for pnpm
-pm2 start pnpm --name client -- start
-pm2 start pnpm --name server -- start
+// для pnpm
+pm2 start pnpm --name client -- start (смотрите скрипт для запуска в package.json)
+pm2 start pnpm --name server -- run dev (смотрите скрипт для запуска в package.json)
 
 
-//autolunch
+// автоматизируем запуск
 pm2 startup ubuntu
+
+// для созранения
+pm2 save
+
+// команда ля проверки
+pm2 log
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //7 - Nginx (web-server)
