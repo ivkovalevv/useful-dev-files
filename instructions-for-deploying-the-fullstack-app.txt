@@ -147,7 +147,7 @@ sudo -u postgres psql -c "ALTER SCHEMA public OWNER TO ваш_пользоват
 Перезапускаем приложение:
 pm2 restart all
 
-
+Полезные команды:
 // автоматизируем запуск
 pm2 startup ubuntu
 
@@ -157,19 +157,25 @@ pm2 save
 // команда ля проверки
 pm2 log
 
+// показать список процессов
+pm2 list
+
 // интерактивный мониторинг
 pm2 monit 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//7 - Nginx (web-server)
+//7 - Nginx (веб-сервер)
 
+Установка:
 sudo apt-get install nginx
 
-sudo nano /etc/nginx/sites-available/default
+Заходжим для настройки конфига:
 
+
+Шаблон:
 server {
   location /api {
-        proxy_pass http://localhost:4200;
+        proxy_pass http://localhost:5000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -185,14 +191,43 @@ location /{
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
+
+location /static/ {
+        alias /home/ваш_пользователь/ваш_проект/подпапка(если есть)/static/;
+        include /etc/nginx/mime.types;
+        expires 30d;
+    }
 		}
 
-//for test
+// Тестируем правильный ли config с точки зрения синтаксиса
 sudo nginx -t
 
+// Перезапускаем Nginx
 sudo service nginx restart
 
-//if u have statics folders
+// Если 80 порт занят >>>
+Ищем процесс, который слушает 80 порт:
+sudo ss -tulnp | grep ':80'
+
+// Если порт занят apache:
+Открываем конфиг Apache:
+sudo nano /etc/apache2/ports.conf
+
+Заменяем Listen 80 на:
+Listen 8080
+
+Обновляем виртуальные хосты Apache (если есть):
+sudo nano /etc/apache2/sites-enabled/000-default.conf
+Заменяем <VirtualHost *:80> на <VirtualHost *:8080>.
+
+Перезапускаеим Apache:
+sudo systemctl restart apache2
+
+
+Теперь порт 80 свободен, и Nginx можно запустить:
+sudo systemctl start nginx
+
+// есть есть статические папки
 location /public {
     include /etc/nginx/mime.types;
     root /home/....;
