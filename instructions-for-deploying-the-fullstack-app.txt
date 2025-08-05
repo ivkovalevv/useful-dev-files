@@ -73,6 +73,15 @@ GRANT ALL PRIVILEGES ON DATABASE your_app_db TO ivan;
 выход
 \q
 
+зайти в канкретную базу данных
+\c name_db
+
+просмотр конкретных значений в базе по строке
+SELECT * FROM public.users LIMIT 10;
+
+удаление пользователей по емейлу
+DELETE FROM public.users WHERE email IN ('test', '111', '123', '1234', '12345', 'qwerty');
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //5 - Установка переменных окружения и зависимостей
 
@@ -170,7 +179,7 @@ pm2 monit
 sudo apt-get install nginx
 
 Заходжим для настройки конфига:
-
+sudo nano /etc/nginx/sites-available/default
 
 Шаблон:
 server {
