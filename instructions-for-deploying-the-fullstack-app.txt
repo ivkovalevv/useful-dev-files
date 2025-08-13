@@ -233,12 +233,6 @@ server {
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
     }
-
-    location /static/ {
-        alias /home/ivkovalevv/apart-delivery/server/static/;
-        include /etc/nginx/mime.types;
-        expires 30d;
-    }
 }
 
 // Тестируем правильный ли config с точки зрения синтаксиса
