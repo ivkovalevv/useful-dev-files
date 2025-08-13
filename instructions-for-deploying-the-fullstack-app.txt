@@ -211,7 +211,7 @@ location /static/ {
 Заходжим для настройки конфига:
 sudo nano /etc/nginx/sites-available/apart-delivery.ru (имя вашего домена)
 
-Шаблон для сайта с доменом:
+Шаблон для сайта с доменом без ssl-сертификата на http:
 server {
     listen 80;
     server_name apart-delivery.ru www.apart-delivery.ru;
@@ -235,7 +235,7 @@ server {
     }
 }
 
-Шаблон для сайта с ssl-сертификатом:
+Шаблон для сайта с ssl-сертификатом (на https):
 # HTTP → HTTPS редирект (порт 80)
 server {
     listen 80;
