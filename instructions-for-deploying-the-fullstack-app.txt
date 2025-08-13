@@ -236,6 +236,16 @@ server {
 }
 
 Шаблон для сайта с ssl-сертификатом:
+# HTTP → HTTPS редирект (порт 80)
+server {
+    listen 80;
+    server_name apart-delivery.ru www.apart-delivery.ru 217.114.11.161;
+    
+    # Перенаправляем все HTTP-запросы на HTTPS
+    return 301 https://apart-delivery.ru$request_uri;
+}
+
+# Основной HTTPS-сервер (порт 443)
 server {
     listen 443 ssl;
     server_name apart-delivery.ru www.apart-delivery.ru;
@@ -246,14 +256,14 @@ server {
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
-    # Проксирование API-запросов
+    # Проксирование API
     location /api {
         proxy_pass http://localhost:5000;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    # Проксирование старых URL изображений (с IP)
+    # Проксирование изображений
     location ~ ^/([a-f0-9-]+\.(png|jpg|jpeg|gif))$ {
         proxy_pass http://localhost:5000;
         proxy_set_header Host $host;
