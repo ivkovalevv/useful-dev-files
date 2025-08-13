@@ -181,9 +181,6 @@ sudo apt-get install nginx
 Заходжим для настройки конфига:
 sudo nano /etc/nginx/sites-available/default
 
-или
-sudo nano /etc/nginx/sites-available/apart-delivery.ru (имя вашего домена)
-
 Шаблон:
 server {
   location /api {
@@ -211,6 +208,9 @@ location /static/ {
     }
 }
 
+Заходжим для настройки конфига:
+sudo nano /etc/nginx/sites-available/apart-delivery.ru (имя вашего домена)
+
 Шаблон для сайта с доменом:
 server {
     listen 80;
@@ -232,6 +232,39 @@ server {
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
+    }
+}
+
+Шаблон для сайта с ssl-сертификатом:
+server {
+    listen 443 ssl;
+    server_name apart-delivery.ru www.apart-delivery.ru;
+
+    # SSL-настройки Certbot
+    ssl_certificate /etc/letsencrypt/live/apart-delivery.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/apart-delivery.ru/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    # Проксирование API-запросов
+    location /api {
+        proxy_pass http://localhost:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Проксирование старых URL изображений (с IP)
+    location ~ ^/([a-f0-9-]+\.(png|jpg|jpeg|gif))$ {
+        proxy_pass http://localhost:5000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Фронтенд
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
 
