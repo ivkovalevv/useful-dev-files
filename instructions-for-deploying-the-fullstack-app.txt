@@ -181,6 +181,9 @@ sudo apt-get install nginx
 Заходжим для настройки конфига:
 sudo nano /etc/nginx/sites-available/default
 
+или
+sudo nano /etc/nginx/sites-available/apart-delivery.ru (имя вашего домена)
+
 Шаблон:
 server {
   location /api {
