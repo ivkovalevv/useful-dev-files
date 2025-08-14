@@ -135,17 +135,16 @@ npm run build
 Устанавливаем процессный менеджер pm2:
 npm install pm2 -g
 
-// для npm
+// старт проекта в режиме РАЗРАБОТЧИКА
 pm2 start npm --name client -- start (смотрите скрипт для запуска в package.json)
 pm2 start npm --name server -- run dev (смотрите скрипт для запуска в package.json)
 
-// для yarn
-pm2 start yarn --name client -- start (смотрите скрипт для запуска в package.json)
-pm2 start yarn --name server -- run dev (смотрите скрипт для запуска в package.json)
-
-// для pnpm
-pm2 start pnpm --name client -- start (смотрите скрипт для запуска в package.json)
-pm2 start pnpm --name server -- run dev (смотрите скрипт для запуска в package.json)
+// старт проекта в ПРОДАКШЕН режиме
+pm2 start npm --name server -- run dev (смотрите скрипт для запуска в package.json)
+// установливаем serve 
+npm install -g serve
+// запускаем build
+pm2 start serve --name client -- -s -l 3000 build
 
 !!! Если есть проблема с аутентификацией при подключении к БД при запуске сервера:
 Проверяем логин и пароль в .env
