@@ -76,6 +76,9 @@ GRANT ALL PRIVILEGES ON DATABASE your_app_db TO ivan;
 зайти в конкретную базу данных
 \c name_db
 
+Или сразу заходим под вашим пользлователем:
+psql -U ivkovalevv -d apart_delivery_db
+
 просмотр конкретных значений в базе по строке
 SELECT * FROM public.users LIMIT 10;
 
