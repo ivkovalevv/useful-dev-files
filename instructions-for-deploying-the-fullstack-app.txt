@@ -88,6 +88,23 @@ DELETE FROM public.users WHERE email IN ('test', '111', '123', '1234', '12345', 
 При изменении МОДЕЛИ Базы Данных необходимо выполнить её миграцию:
 npx sequelize-cli migration:generate --name add-user-fields
 
+Описываем миграцию:
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.addColumn('users', 'image', {
+      type: Sequelize.STRING,
+      defaultValue: 'default-image.png'    
+    });
+  },
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.removeColumn('users', 'image');
+  }
+};
+
 Создаем файл .sequelizerc со следующим описанием:
 const path = require('path');
 
