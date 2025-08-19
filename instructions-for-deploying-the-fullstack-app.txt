@@ -330,7 +330,7 @@ server {
     }
 
     # Проксирование изображений
-    location ~ ^/([a-f0-9-]+\.(png|jpg|jpeg|gif))$ {
+    location ~ ^/([a-z0-9-]+\.(png|jpg|jpeg|gif))$ {
         proxy_pass http://localhost:5000;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
