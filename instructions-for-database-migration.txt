@@ -1,0 +1,82 @@
+#### При изменении МОДЕЛИ Базы Данных необходимо выполнить её миграцию ####
+
+// Сначала убедитесь, что файлы .sequelizerc и config.json существуют и заполнены правильно
+// Если их нет или они заполнены неверно, создаём и заполняем по следующей логике:
+
+// Создаем файл .sequelizerc со следующим описанием:
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve('config.json'),
+  'models-path': path.resolve('models'),
+  'migrations-path': path.resolve('migrations'),
+  'seeders-path': path.resolve('seeders')
+}
+
+// Создаем фaйл config.json cо следующим описанием:
+{
+  "development": {
+    "username": "user", // имя пользователя
+    "password": "123456", // ваш пароль
+    "database": "apart_delivery_db", // название базы данных
+    "host": "localhost",
+    "port": 5432,
+    "dialect": "postgres",
+    "logging": false
+  },
+  "production": {
+    "username": "user", // имя пользователя
+    "password": "123456", // ваш пароль
+    "database": "apart_delivery_db", // название базы данных
+    "host": "localhost",
+    "port": 5432,
+    "dialect": "postgres",
+    "logging": false
+  }
+}
+
+// Теперь переходим к самой миграции
+// Выполняем команду для генерации нового файла миграции
+npx sequelize-cli migration:generate --name add-new-fields // где "add-new-fields" название для новой миграции
+
+// Sequelize сгенерирует новый JavaScript файл с именем типа XXXXXXXXXXXXXX-add-user-orders-history.js, где XXXXXXXXXXXXXX дата и время создания
+
+// Описываем миграцию:
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+
+/**-------------------------- ОПИСАНИЕ ИЗМЕНЕНИЙ В БД -------------------------------*/
+    await queryInterface.addColumn('users', 'image', {
+      type: Sequelize.STRING,
+      defaultValue: 'default-image.png'    
+    });
+/**----------------------- КОНЕЦ ОПИСАНИЯ ИЗМЕНЕНИЙ В БД ----------------------------*/
+
+  },
+
+  async down(queryInterface, Sequelize) {
+
+/**---------------- ОПИСАНИЕ ОТМЕНЫ ИЗМЕНЕНИЙ В БД (для отката) ---------------------*/
+    await queryInterface.removeColumn('users', 'image');
+/**-------------------- КОНЕЦ ОПИСАНИЯ ОТМЕНЫ ИЗМЕНЕНИЙ В БД ------------------------*/
+
+  }
+};
+
+// Применяем миграцию: 
+npx sequelize-cli db:migrate
+
+// Sequelize сам определяет какую именно миграцию применять, фильтруя имеющиеся миграциии в папке migrations/ по дате создания
+
+#######################################################################
+
+# Проверить, видит ли sequelize конфигурацию
+npx sequelize-cli db:migrate:status
+
+// Если нужно откатить
+npx sequelize-cli db:migrate:undo
+
+
