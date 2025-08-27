@@ -129,16 +129,6 @@ sudo -u postgres pg_restore -d your_app_db -Fc /var/lib/postgresql/apart_deliver
 
 Проверяем командой sudo -u postgres psql -d your_app_db -c "\dt"
 
-
-Снимаем бэкап базы данных:
-sudo -u postgres pg_dump -F c -f /tmp/apart_delivery_db_backup_$(date +%d_%m_%Y).dump apart_delivery_db
-
-Копируем в нужную директорию:
-cp /tmp/apart_delivery_db_backup_*.dump ~/
-
-Копируем бэкапы на ПК (Windows) - команда выполняется на локальноп ПК:
-pscp -r user@адрес_вашего сервера:/home/user/db_backups "C:\Users\user\files\прочее"
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 //6 - PM 2 (процессный менеджер)
 
