@@ -245,7 +245,7 @@ server {
 server {
     listen 80;
     server_name apart-delivery.ru www.apart-delivery.ru 217.114.11.161;
-    
+
     # Перенаправляем все HTTP-запросы на HTTPS
     return 301 https://apart-delivery.ru$request_uri;
 }
@@ -261,8 +261,20 @@ server {
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
+    # Сжатие скриптов
+    gzip on;
+    gzip_types application/javascript;
+    gzip_comp_level 6;
+
+
     # Проксирование API
     location /api {
+
+      # Проверяем наличие специального заголовка чтобы разрешать только запросы с сайта
+        if ($http_referer !~* (apart-delivery.ru)) {
+            return 403;
+        }
+
         proxy_pass http://localhost:5000;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
@@ -280,6 +292,16 @@ server {
         proxy_pass http://localhost:3000;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # WebSocket проксирование
+    location /ws {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_read_timeout 86400; # Для долгих WS-сессий
     }
 }
 
