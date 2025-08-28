@@ -1,8 +1,0 @@
-Снимаем бэкап базы данных:
-sudo -u postgres pg_dump -F c -f /tmp/apart_delivery_db_backup_$(date +%d_%m_%Y).dump apart_delivery_db
-
-Копируем в нужную директорию:
-cp /tmp/apart_delivery_db_backup_*.dump ~/
-
-Копируем бэкапы на ПК (Windows) - команда выполняется на локальноп ПК:
-pscp -r user@адрес_вашего сервера:/home/user/db_backups "C:\Users\user\files\прочее"
