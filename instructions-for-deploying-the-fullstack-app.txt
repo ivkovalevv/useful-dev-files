@@ -82,6 +82,9 @@ psql -U ivkovalevv -d apart_delivery_db
 просмотр конкретных значений в базе по строке
 SELECT * FROM public.users LIMIT 10;
 
+просмотр конкретных столбцов в таблице базы по строке
+SELECT id, email, role, "createdAt", "updatedAt", "userName", "userTel" FROM public.users LIMIT 10;
+
 удаление пользователей по емейлу
 DELETE FROM public.users WHERE email IN ('test', '111', '123', '1234', '12345', 'qwerty');
 
