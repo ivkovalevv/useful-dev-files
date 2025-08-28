@@ -15,3 +15,8 @@ cp /tmp/apart_delivery_db_backup_*.dump ~/
 ```bash
 pscp -r user@адрес_вашего сервера:/home/user/db_backups "C:\Users\user\files\прочее"
 ```
+
+## Восстановление из бэкапа:
+```bash
+sudo -u postgres pg_restore -d apart_delivery_db /путь/к/файлу.dump
+```
