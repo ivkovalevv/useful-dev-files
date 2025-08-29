@@ -1,22 +1,27 @@
-Инструкция по деплою fullstack-приложения на VPS
+# Инструкция по деплою fullstack-приложения на VPS
 
-//1 - Подключаемся к серверу по ssh и добавляем нового root пользователя
+## 1 - Подключаемся к серверу по ssh и добавляем нового root пользователя
+```bash
 adduser ivan
+```
 
 открываем файл:
+```bash
 visudo
+```
 
-Добавляем новую строку "ivan ALL=(ALL:ALL)ALL" после "root ALL=(ALL:ALL) ALL"
+Добавляем новую строку `ivan ALL=(ALL:ALL)ALL` после `root ALL=(ALL:ALL) ALL`
 
-переходим на созданного пользователя "su - ivan"
-тестируем успешный переход командой "sudo apt-get update"
+переходим на созданного пользователя `su - ivan`
+тестируем успешный переход командой `sudo apt-get update`
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//2 - Установка nvm, node, npm
 
+## 2 - Установка nvm, node, npm
+```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
 nvm -v
+```
 
 (установите ту же версию, что и на вашем ПК)
 nvm install node 21.6
