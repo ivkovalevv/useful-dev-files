@@ -19,88 +19,103 @@ visudo
 ## 2 - Установка nvm, node, npm
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-
-nvm -v
 ```
 
-(установите ту же версию, что и на вашем ПК)
+Установите ту же версию, что и на вашем ПК
+```bash
 nvm install node 21.6
+```
 
-тестируем командой "node -v" или "npm -v"
+тестируем командой `node -v` или `npm -v`
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//3 - Пуш в отдельные git-репозитории client и server части приложения
 
+## 3 - Пуш в отдельные git-репозитории client и server части приложения
+```bash
 git add .
 git commit -m 'Init'
 git add origin
 git push origin main
+```
 
 
 Создаем ключ для git на сервере
+```bash
 ssh-keygen -o -t rsa -C “ssh@github.com”
-"ll" - для теста
-"cat id_rsa.pub" // копируем
+```
 
-вставляем в github аккаунте -> Settings/SSH and GPG keys -> New SSH key
+`ll` - для теста  
+`cat id_rsa.pub` // копируем
+
+вставляем в github аккаунте -> `Settings/SSH and GPG keys` -> `New SSH key`
 
 На VPS:
-Создаем папку проекта:
+Создаем папку проекта:  
+```bash
 mkdir "project-folder"
-
+```
+Устанавливаем git:
+```bash
 sudo apt-get install git-all
+```
 
-измените свой URL-адрес git
+(измените свой URL-адрес git)
+```bash
 git clone git@github.com:username/front.git
 git clone git@github.com:username/back.git
+```
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//4 - База данных
 
+## 4 - База данных
+
+```bash
 sudo apt update
 sudo apt install postgresql postgresql-contrib
+```
 
 Открываем в терминал PostgreSQL под дефолтным пользователем postgres
+```bash
 sudo -u postgres psql
+```
 
-Пожалуйста, измените имя базы данных и логин пользователя
+Измените имя базы данных и логин пользователя
+```bash
 CREATE ROLE ivan WITH LOGIN PASSWORD '123456' CREATEDB;
 CREATE DATABASE your_app_db OWNER ivan;
 GRANT ALL PRIVILEGES ON DATABASE your_app_db TO ivan;
+```
 
-Базовые команды:
-список пользователей
-\du
-
-список баз данных
-\l
-
-выход
-\q
-
-зайти в конкретную базу данных
-\c name_db
+Базовые команды:  
+Список пользователей - `\du`  
+Список баз данных - `\l`  
+Выход - `\q`  
+Зайти в конкретную базу данных - `\c name_db`  
 
 Или сразу заходим под вашим пользлователем:
+```bash
 psql -U ivkovalevv -d apart_delivery_db
+```
 
-просмотр конкретных значений в базе по строке
+Полезные команды SQL:    
+Просмотр конкретных значений в базе по строке:
+```bash
 SELECT * FROM public.users LIMIT 10;
-
-просмотр конкретных столбцов в таблице базы по строке
+```
+Просмотр конкретных столбцов в таблице базы по строке:
+```bash
 SELECT id, email, role, "createdAt", "updatedAt", "userName", "userTel" FROM public.users LIMIT 10;
-
-удаление пользователей по емейлу
+```
+Удаление пользователей по email:
+```bash
 DELETE FROM public.users WHERE email IN ('test', '111', '123', '1234', '12345', 'qwerty');
+```
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//5 - Установка переменных окружения и зависимостей
 
-Создаем .env в server и client директориях
+## 5 - Установка переменных окружения и зависимостей
 
-команда nano .env
+Создаем `.env` в `server` и `client` директориях командой `nano .env` 
 
-Для server:
+Шаблон заполнения `.env` для `server`:
+```bash
 PORT=5000
 DB_NAME=your_app_db
 DB_USER=postgres
@@ -109,12 +124,15 @@ DB_HOST=localhost
 DB_PORT=5432
 SECRET_KEY=random_secret_key
 NODE_ENV=production
+```
 
-Для client:
+Шаблон заполнения `.env` для `client`:
+```bash
 REACT_APP_API_URL=http://адрес_сервера:5000/
+NODE_ENV=production
+```
 
-выйти и сохранить
-^x
+Выйти и сохранить - `^x`  
 
 // (не обязательно), если вам нужны pnpm или yarn
 npm install -g pnpm
