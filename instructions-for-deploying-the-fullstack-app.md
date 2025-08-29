@@ -29,13 +29,13 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 nvm install node 21.6
 ```
 
-тестируем командой `node -v` или `npm -v`
+Тестируем командой `node -v` или `npm -v`
 
 
 ## 3 - Пуш в отдельные git-репозитории client и server части приложения
 ```bash
 git add .
-git commit -m 'Init'
+git commit -m 'init'
 git add origin
 git push origin main
 ```
@@ -46,12 +46,12 @@ git push origin main
 ssh-keygen -o -t rsa -C “ssh@github.com”
 ```
 
-`ll` - для теста  
-`cat id_rsa.pub` // копируем
+Для теста - `ll`  
+Прочитать содержимое файла и скопировать - `cat id_rsa.pub`  
 
-вставляем в github аккаунте -> `Settings/SSH and GPG keys` -> `New SSH key`
+Вставляем в github аккаунте -> `Settings/SSH and GPG keys` -> `New SSH key`
 
-На VPS:
+На VPS:  
 Создаем папку проекта:  
 ```bash
 mkdir "project-folder"
@@ -80,7 +80,8 @@ sudo apt install postgresql postgresql-contrib
 sudo -u postgres psql
 ```
 
-Измените имя базы данных и логин пользователя
+Создаём пользователя, базу данных и выдаём созданному пользователю права на неё:  
+(измените имя базы данных и логин пользователя)
 ```bash
 CREATE ROLE ivan WITH LOGIN PASSWORD '123456' CREATEDB;
 CREATE DATABASE your_app_db OWNER ivan;
@@ -98,7 +99,7 @@ GRANT ALL PRIVILEGES ON DATABASE your_app_db TO ivan;
 psql -U ivkovalevv -d apart_delivery_db
 ```
 
-Полезные команды SQL:    
+Полезные команды SQL:  
 Просмотр конкретных значений в базе по строке:
 ```bash
 SELECT * FROM public.users LIMIT 10;
