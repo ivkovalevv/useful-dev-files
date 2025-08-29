@@ -18,6 +18,7 @@ ivan ALL=(ALL:ALL)ALL
 Переходим на созданного пользователя командой `su - ivan`  
 Тестируем успешный переход командой `sudo apt-get update`
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 ## 2 - Установка nvm, node, npm
 ```bash
@@ -31,6 +32,7 @@ nvm install node 21.6
 
 Тестируем командой `node -v` или `npm -v`
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 ## 3 - Пуш в отдельные git-репозитории client и server части приложения
 ```bash
@@ -67,6 +69,7 @@ git clone git@github.com:username/front.git
 git clone git@github.com:username/back.git
 ```
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 ## 4 - База данных
 
@@ -113,6 +116,7 @@ SELECT id, email, role, "createdAt", "updatedAt", "userName", "userTel" FROM pub
 DELETE FROM public.users WHERE email IN ('test', '111', '123', '1234', '12345', 'qwerty');
 ```
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
 ## 5 - Установка переменных окружения и зависимостей
 
@@ -138,48 +142,72 @@ NODE_ENV=production
 
 Выйти и сохранить - `^x`  
 
-// (не обязательно), если вам нужны pnpm или yarn
+Если вам нужны `pnpm` или `yarn`:
+```bash
 npm install -g pnpm
 npm install -g yarn
+```
 
-yarn или pnpm install или npm install
+`yarn` или `pnpm install` или `npm install`
 
 Загружаем dump вашей базы данных с вашего ПК на сервер
+```bash
 scp C:/Users/user/files/fullstack_app_backup_01_08_2025 user@адрес_вашего сервера:/home/ivan
+```
 
 Копируем файл в домашнюю директорию postgres:
+```bash
 sudo cp /home/ivan/fullstack_app_backup_01_08_2025 /var/lib/postgresql/
 sudo chown postgres:postgres /var/lib/postgresql/fullstack_app_backup_01_08_2025
+```
 
 Удаляем все существующие таблицы из созданной БД перед загрузкой дампа:
+```bash
 sudo -u postgres psql -d your_app_db -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
+```
 
 После этого загружаем наш дамп в пустую БД:
+```bash
 sudo -u postgres pg_restore -d your_app_db -Fc /var/lib/postgresql/apart_delivery_backup_01_08_2025
+```
 
-Проверяем командой sudo -u postgres psql -d your_app_db -c "\dt"
+Проверяем командой `sudo -u postgres psql -d your_app_db -c "\dt"`
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//6 - PM 2 (процессный менеджер)
+
+## 6 - PM 2 [Процессный менеджер]
 
 Собираем client часть приложения:
+```bash
 npm run build
+```
 
-Устанавливаем процессный менеджер pm2:
+Устанавливаем процессный менеджер `pm2`:
+```bash
 npm install pm2 -g
+```
 
-// старт проекта в режиме РАЗРАБОТЧИКА
+Старт проекта в режиме РАЗРАБОТЧИКА:
+```bash
 pm2 start npm --name client -- start (смотрите скрипт для запуска в package.json)
 pm2 start npm --name server -- run dev (смотрите скрипт для запуска в package.json)
+```
 
-// старт проекта в ПРОДАКШЕН режиме
+Старт проекта в ПРОДАКШЕН режиме:
+```bash
 pm2 start npm --name server -- run dev (смотрите скрипт для запуска в package.json)
-// установливаем serve 
-npm install -g serve
-// запускаем build
-pm2 start serve --name client -- -s -l 3000 build
+```
 
-!!! Если есть проблема с аутентификацией при подключении к БД при запуске сервера:
+Установливаем `serve`:
+```bash
+npm install -g serve
+```
+Запускаем `build`:
+```bash
+pm2 start serve --name client -- -s -l 3000 build
+```
+
+**Если есть проблема с аутентификацией при подключении к БД при запуске сервера:**
 Проверяем логин и пароль в .env
 
 Выдаём права на схему public (от имени postgres):
