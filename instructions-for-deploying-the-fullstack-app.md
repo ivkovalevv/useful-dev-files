@@ -207,41 +207,46 @@ npm install -g serve
 pm2 start serve --name client -- -s -l 3000 build
 ```
 
-**Если есть проблема с аутентификацией при подключении к БД при запуске сервера:**
-Проверяем логин и пароль в .env
-
-Выдаём права на схему public (от имени postgres):
+**Если есть проблема с аутентификацией при подключении к БД при запуске сервера:**  
+1. Проверяем логин и пароль в `.env`  
+2. Выдаём права на схему `public` (от имени `postgres`):
+```bash
 sudo -u postgres psql -c "ALTER SCHEMA public OWNER TO ваш_пользователь; GRANT ALL ON SCHEMA public TO ваш_пользователь;"
-
-Перезапускаем приложение:
+```
+3. Перезапускаем приложение:
+```bash
 pm2 restart all
+```
 
-Полезные команды:
-// автоматизируем запуск
-pm2 startup ubuntu
+Полезные команды:  
+Автоматизируем запуск - `pm2 startup ubuntu`  
+Для сохранения - `pm2 save`  
+Команда для проверки - `pm2 log`  
+Показать список процессов - `pm2 list`  
+Интерактивный мониторинг - `pm2 monit` 
 
-// для созранения
-pm2 save
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
-// команда ля проверки
-pm2 log
-
-// показать список процессов
-pm2 list
-
-// интерактивный мониторинг
-pm2 monit 
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//7 - Nginx (веб-сервер)
+## 7 - Nginx [Веб-сервер]
 
 Установка:
+```bash
 sudo apt-get install nginx
+```
 
-Заходжим для настройки конфига:
+Заходим для настройки конфига:
+```bash
 sudo nano /etc/nginx/sites-available/default
+```
 
-Шаблон:
+Заходжим для настройки конфига конкретного сайта:
+```bash
+sudo nano /etc/nginx/sites-available/apart-delivery.ru (имя вашего домена)
+```
+Где `apart-delivery.ru` имя вашего домена.
+
+Стандартный шаблон:
+```bash
 server {
   location /api {
         proxy_pass http://localhost:5000;
@@ -267,11 +272,10 @@ location /static/ {
         expires 30d;
     }
 }
+```
 
-Заходжим для настройки конфига:
-sudo nano /etc/nginx/sites-available/apart-delivery.ru (имя вашего домена)
-
-Шаблон для сайта с доменом без ssl-сертификата на http:
+Шаблон для сайта с доменом без SSL-сертификата на HTTP:
+```bash
 server {
     listen 80;
     server_name apart-delivery.ru www.apart-delivery.ru;
@@ -294,8 +298,10 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 }
+```
 
-Шаблон для сайта с ssl-сертификатом (на https):
+Шаблон для сайта с SSL-сертификатом на HTTPS:
+```bash
 # HTTP → HTTPS редирект (порт 80)
 server {
     listen 80;
@@ -359,63 +365,82 @@ server {
         proxy_read_timeout 86400; # Для долгих WS-сессий
     }
 }
+```
 
-// Тестируем правильный ли config с точки зрения синтаксиса
+Тестируем правильный ли `config` с точки зрения синтаксиса:
+```bash
 sudo nginx -t
-
-// Перезапускаем Nginx
+```
+Перезапускаем `Nginx`:
+```bash
 sudo service nginx restart
+```
 
-// Если 80 порт занят >>>
-Ищем процесс, который слушает 80 порт:
+**Если 80 порт занят**
+1. Ищем процесс, который слушает 80 порт:
+```bash
 sudo ss -tulnp | grep ':80'
-
-// Если порт занят apache:
-Открываем конфиг Apache:
+```
+2. Если порт занят `Apache:`  
+2.1. Открываем конфиг `Apache`:
+```bash
 sudo nano /etc/apache2/ports.conf
-
-Заменяем Listen 80 на:
-Listen 8080
-
-Обновляем виртуальные хосты Apache (если есть):
+```
+2.2. Заменяем `Listen 80` на `Listen 8080`  
+2.3. Обновляем виртуальные хосты `Apache` (если есть):  
+```bash
 sudo nano /etc/apache2/sites-enabled/000-default.conf
-Заменяем <VirtualHost *:80> на <VirtualHost *:8080>.
-
-Перезапускаеим Apache:
+```
+2.4. Заменяем `<VirtualHost *:80>` на `<VirtualHost *:8080>`.
+2.5. Перезапускаеим `Apache`:
+```bash
 sudo systemctl restart apache2
-
+```
 
 Теперь порт 80 свободен, и Nginx можно запустить:
+```bash
 sudo systemctl start nginx
+```
 
-// есть есть статические папки
+Если есть статические папки:
+```bash
 location /public {
     include /etc/nginx/mime.types;
     root /home/....;
 }
+```
 
-Если есть ошибка "Не удается получить доступ к сайту - ERR_CONNECTION_TIMED_OUT", нужно проверить разрешены ли порты.
+**Если есть ошибка `"Не удается получить доступ к сайту - ERR_CONNECTION_TIMED_OUT"`, нужно проверить разрешены ли порты.**  
 Чтобы разрешить порт пользуемся командой:
+```bash
 sudo ufw allow 3000/tcp
+```
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//8 - Bonus SSL
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 
+
+## 8 - Установка SSL через `certbot`:
+```bash
 sudo apt install certbot python3-certbot-nginx
 sudo systemctl reload nginx
+```
 
-//change domain
+Меняем домен:  
+```bash
 sudo certbot --nginx -d test.com
 
 sudo systemctl status certbot.timer
+```
 
-//check for errors
+Проверяем есть ли ошибки:  
+```bash
 sudo certbot renew --dry-run
+```
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-If u update files, you should on server:
-
-
+После изменения файлов в репозитории:
+```bash
 git pull && pnpm run build && pm2 reload all
+```
 	
