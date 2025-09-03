@@ -1,7 +1,7 @@
-# Squoosh.app — Images optimization: 
+# Squoosh.app — images optimization: 
       https://squoosh.app/
 
-# Can I Use — Checking support for front-end web technologies by different browsers: 
+# Can I Use — checking support for web technologies by different browsers: 
       https://caniuse.com/
       
 # Font-size Clamp Generator: 
