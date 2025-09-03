@@ -1,41 +1,41 @@
-# Optimization
+# 1. Optimization
 
-## PageSpeed Insights — optimization test:  
+## 1.1. PageSpeed Insights — optimization test:  
       https://pagespeed.web.dev/
 
-## Squoosh.app — images optimization:  
+## 1.2. Squoosh.app — images optimization:  
       https://squoosh.app/
 
-## Css Minifier — css optimization:  
+## 1.3. Css Minifier — css optimization:  
       https://www.toptal.com/developers/cssminifier
       
-## Css Unminify:  
+## 1.4. Css Unminify:  
       https://unminify.ru/
 
-## JS Minifier & Uglify:  
+## 1.5. JS Minifier & Uglify:  
       https://www.uglifyjs.net/
 
-## Webfont Generator — fonts optimization: 
+## 1.6. Webfont Generator — fonts optimization: 
       https://www.fontsquirrel.com/tools/webfont-generator
 
 ---------------------------------------------------------------
 
-# Support by browsers
+# 2. Support by browsers
 
-## Can I Use — checking support for web-tech by browsers: 
+## 2.1. Can I Use — checking support for web-tech by browsers: 
       https://caniuse.com/
 
 ---------------------------------------------------------------
 
-# CSS Generators
+# 3. CSS Generators
       
-## Font-size Clamp Generator: 
+## 3.1. Font-size Clamp Generator: 
       https://clamp.font-size.app/
 
-## Glassmorphism CSS Effect Generator: 
+## 3.2. Glassmorphism CSS Effect Generator: 
       https://css.glass/
 
-## CSS Gradient – Generator, Maker, and Background: 
+## 3.3. CSS Gradient – Generator, Maker, and Background: 
       https://cssgradient.io/
 
 ---------------------------------------------------------------
