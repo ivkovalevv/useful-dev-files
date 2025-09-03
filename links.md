@@ -1,4 +1,4 @@
-# 1. <span style="color: green;">зеленый текст</span>Optimization
+# 1. Optimization
 
 ## • PageSpeed Insights — optimization test:  
       https://pagespeed.web.dev/
