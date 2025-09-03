@@ -1,6 +1,6 @@
 # 1. Optimization
 
-## 1.1. PageSpeed Insights — optimization test:  
+## • PageSpeed Insights — optimization test:  
       https://pagespeed.web.dev/
 
 ## 1.2. Squoosh.app — images optimization:  
