@@ -3,6 +3,9 @@
 ## Squoosh.app — images optimization:  
       https://squoosh.app/
 
+## Css Minifier — css optimization:  
+      https://www.toptal.com/developers/cssminifier
+
 ## Webfont Generator — fonts optimization: 
       https://www.fontsquirrel.com/tools/webfont-generator
 
