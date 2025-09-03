@@ -6,6 +6,8 @@
 ## Webfont Generator — fonts optimization: 
       https://www.fontsquirrel.com/tools/webfont-generator
 
+---------------------------------------------------------------
+
 # Support by browsers
 
 ## Can I Use — checking support for web-tech by browsers: 
