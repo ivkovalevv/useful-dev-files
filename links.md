@@ -13,6 +13,8 @@
 ## Can I Use — checking support for web-tech by browsers: 
       https://caniuse.com/
 
+---------------------------------------------------------------
+
 # CSS Generators
       
 ## Font-size Clamp Generator: 
@@ -24,3 +26,4 @@
 ## CSS Gradient – Generator, Maker, and Background: 
       https://cssgradient.io/
 
+---------------------------------------------------------------
