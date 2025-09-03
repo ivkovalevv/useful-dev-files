@@ -9,6 +9,9 @@
 ## Css Unminify:  
       https://unminify.ru/
 
+## JS Minifier & Uglify:  
+      https://www.uglifyjs.net/
+
 ## Webfont Generator — fonts optimization: 
       https://www.fontsquirrel.com/tools/webfont-generator
 
