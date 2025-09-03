@@ -1,24 +1,24 @@
-## Optimization
+# Optimization
 
-# Squoosh.app — images optimization: 
+## Squoosh.app — images optimization: 
       https://squoosh.app/
 
-# Webfont Generator — fonts optimization: 
+## Webfont Generator — fonts optimization: 
       https://www.fontsquirrel.com/tools/webfont-generator
 
-## Support by browsers
+# Support by browsers
 
-# Can I Use — checking support for web-tech by browsers: 
+## Can I Use — checking support for web-tech by browsers: 
       https://caniuse.com/
 
-## CSS Generators
+# CSS Generators
       
-# Font-size Clamp Generator: 
+## Font-size Clamp Generator: 
       https://clamp.font-size.app/
 
-# Glassmorphism CSS Effect Generator: 
+## Glassmorphism CSS Effect Generator: 
       https://css.glass/
 
-# CSS Gradient – Generator, Maker, and Background: 
+## CSS Gradient – Generator, Maker, and Background: 
       https://cssgradient.io/
 
