@@ -1,7 +1,7 @@
 # Optimization
 
-## Squoosh.app — images optimization:
-https://squoosh.app/
+## Squoosh.app — images optimization:  
+      https://squoosh.app/
 
 ## Webfont Generator — fonts optimization: 
       https://www.fontsquirrel.com/tools/webfont-generator
