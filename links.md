@@ -6,10 +6,10 @@
 ## • Squoosh.app — images optimization:  
       https://squoosh.app/
 
-## • Css Minifier — css optimization:  
+## • CSS Minifier — css optimization:  
       https://www.toptal.com/developers/cssminifier
       
-## • Css Unminify:  
+## • CSS Unminify:  
       https://unminify.ru/
 
 ## • JS Minifier & Uglify:  
