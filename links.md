@@ -1,4 +1,34 @@
-# 1. Optimization
+# 1. Support by browsers
+
+## • Can I Use — checking support for web-tech by browsers: 
+      https://caniuse.com/
+
+---------------------------------------------------------------
+
+# 2. CSS Generators
+      
+## • Font-size Clamp Generator: 
+      https://clamp.font-size.app/
+
+## • Glassmorphism CSS Effect Generator: 
+      https://css.glass/
+
+## • CSS Gradient – Generator, Maker, and Background: 
+      https://cssgradient.io/
+
+---------------------------------------------------------------
+
+# 3. Fonts
+
+## • Google Webfonts Helper: 
+      https://gwfh.mranftl.com/fonts
+
+## • Google Fonts: 
+      https://fonts.google.com/
+
+---------------------------------------------------------------
+
+# 4. Optimization
 
 ## • PageSpeed Insights — optimization test:  
       https://pagespeed.web.dev/
@@ -19,31 +49,3 @@
       https://www.fontsquirrel.com/tools/webfont-generator
 
 ---------------------------------------------------------------
-
-# 2. Support by browsers
-
-## • Can I Use — checking support for web-tech by browsers: 
-      https://caniuse.com/
-
----------------------------------------------------------------
-
-# 3. CSS Generators
-      
-## • Font-size Clamp Generator: 
-      https://clamp.font-size.app/
-
-## • Glassmorphism CSS Effect Generator: 
-      https://css.glass/
-
-## • CSS Gradient – Generator, Maker, and Background: 
-      https://cssgradient.io/
-
----------------------------------------------------------------
-
-# 4. Fonts
-
-## • Google Webfonts Helper: 
-      https://gwfh.mranftl.com/fonts
-
-## • Google Fonts: 
-      https://fonts.google.com/
