@@ -39,3 +39,8 @@
       https://cssgradient.io/
 
 ---------------------------------------------------------------
+
+# 3. Fonts
+
+## • Google Webfonts Helper: 
+      https://gwfh.mranftl.com/fonts
