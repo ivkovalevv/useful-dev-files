@@ -40,7 +40,10 @@
 
 ---------------------------------------------------------------
 
-# 3. Fonts
+# 4. Fonts
 
 ## • Google Webfonts Helper: 
       https://gwfh.mranftl.com/fonts
+
+## • Google Fonts: 
+      https://fonts.google.com/
