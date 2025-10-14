@@ -52,3 +52,8 @@
       https://www.fontsquirrel.com/tools/webfont-generator
 
 ---------------------------------------------------------------
+
+# 5. Admin panel
+
+## • Textolite — static website management system:  
+      https://textolite.ru/
