@@ -57,3 +57,12 @@
 
 ## • Textolite — static website management system:  
       https://textolite.ru/
+
+---------------------------------------------------------------
+
+# 5. Maps
+
+## • Yandex Maps Constructor
+      https://yandex.ru/map-constructor
+
+---------------------------------------------------------------
