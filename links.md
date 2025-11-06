@@ -60,7 +60,7 @@
 
 ---------------------------------------------------------------
 
-# 5. Maps
+# 6. Maps
 
 ## • Yandex Maps Constructor
       https://yandex.ru/map-constructor
