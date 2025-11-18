@@ -26,6 +26,9 @@
 ## • Google Fonts: 
       https://fonts.google.com/
 
+## • Fonts Converter: 
+      https://transfonter.org/
+
 ---------------------------------------------------------------
 
 # 4. Optimization
