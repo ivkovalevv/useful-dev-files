@@ -207,6 +207,26 @@ npm install -g serve
 pm2 start serve --name client -- -s -l 3000 build
 ```
 
+Чтобы проект автоматически перезапускался при перезагрузке сервера:
+1. Сохраняем текущий список процессов PM2:
+```bash
+pm2 save
+```
+2. Настраиваем автоматический запуск проекта при загрузке сервера:
+```bash
+pm2 startup
+```
+PM2 определит систему и выведет команду, которую нужно скопировать и выполнить с правами root. 
+Она будет выглядеть примерно так:
+```bash
+sudo env PATH=$PATH:/home/username/.nvm/versions/node/v24.4.1/bin /home/username/.nvm/versions/node/v24.4.1/lib/node_modules/pm2/bin/pm2 startup systemd -u username --hp /home/username
+```
+3. Перезапуск сервера для проверки успешной настройки:
+```bash
+sudo reboot
+```
+
+
 **Если есть проблема с аутентификацией при подключении к БД при запуске сервера:**  
 1. Проверяем логин и пароль в `.env`  
 2. Выдаём права на схему `public` (от имени `postgres`):
