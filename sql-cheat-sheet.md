@@ -15,13 +15,13 @@ SELECT 'Здравствуйте, я ваш первый запрос!'; // Зд
 SELECT (8+2)/5; // 2
 ```
 
-<br/>
+<br><br/>
 Запрос к базе данных может выглядеть так:
 ```SQL
 select sp.advertising_id,sp.install_date,sp.session_num,sp.payer,sp.last_active as last_date, DATE_DIFF(sp.last_active, install_date, day) as max_play from players as sp where sp.date = '2021-02-28' and sp.install_date between '2021-02-01' and '2021-02-26';
 ```
 
-<br/>
+<br><br/>
 А так выглядит тот же запрос, написанный по правилам:
 ```SQL
 SELECT sp.advertising_id,
