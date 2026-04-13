@@ -104,7 +104,7 @@ psql -U ivkovalevv -d apart_delivery_db
 ```
 
 Полезные команды SQL:  
-Просмотр конкретных значений в базе по строке:
+Просмотр конкретных значений в базе по строке с ограничением в 10 строк:
 ```bash
 SELECT * FROM public.users LIMIT 10;
 ```
@@ -112,7 +112,7 @@ SELECT * FROM public.users LIMIT 10;
 ```bash
 SELECT id, email, role, "createdAt", "updatedAt", "userName", "userTel" FROM public.users LIMIT 10;
 ```
-Удаление пользователей по email:
+Удаление пользователей по определенным email:
 ```bash
 DELETE FROM public.users WHERE email IN ('test', '111', '123', '1234', '12345', 'qwerty');
 ```
