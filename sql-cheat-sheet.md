@@ -1,4 +1,6 @@
-# Основны SQL, или Structured Query Language (англ. «язык структурированных запросов»)
+# Основны SQL, или Structured Query Language (англ. «язык структурированных запросов»)  
+
+🔗 [Ссылка на шпаргалку](https://code.s3.yandex.net/data-analyst/sql/topic_filtering.pdf)  
 
 ## 1. Структура запроса в SQL
 
