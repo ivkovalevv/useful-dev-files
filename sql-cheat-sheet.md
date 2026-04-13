@@ -343,10 +343,12 @@ WHERE date >= '2022-02-27' AND date <= '2022-03-14';
 Пример работы функции `DATE_TRUNC` с выделением месяца:
 ```SQL
 SELECT date,
-       DATE_TRUNC('month', date)
+       DATE_TRUNC('month', date)::date
 FROM hotdog
 LIMIT 5;
-```
+```  
+
+`::date` выведет дату без часовых поясов
 
 | date | date_trunc |
 | :--- | :---: |
@@ -367,7 +369,7 @@ SELECT order_id,
        name_hotdog,
        ingredients
 FROM hotdog
-WHERE DATE_TRUNC('month', date) = '2022-02-01'
+WHERE DATE_TRUNC('month', date)::date = '2022-02-01'
 LIMIT 5;
 ```
 | order_id | bracelet_id | date | name_hotdog | ingredients |
