@@ -506,3 +506,18 @@ FROM buyer;
 | 20 |
 
 <br><br/>
+
+Пример расчета бизнес-метрики conversion rate, или CR.  
+Это доля уникальных пользователей от пользователей в целом.
+```SQL
+SELECT  COUNT(DISTINCT(bracelet_id))::numeric AS unique_users,
+        COUNT(bracelet_id)::numeric AS all_users,
+        COUNT(DISTINCT(bracelet_id))::numeric / COUNT(bracelet_id)::numeric AS conversion_rate
+FROM hotdog;
+```  
+
+| unique_users | all_users | conversion_rate |
+| :---: | :---: | :---: |
+| 130 | 870 | 0.149425 |
+
+<br><br/>
